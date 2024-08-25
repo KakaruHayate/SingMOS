@@ -12,6 +12,8 @@ https://github.com/South-Twilight/SingMOS/releases/download/checkpoint/ft_wav2ve
 
 通过`python score.py --path <audio path>`命令使用该工具，会在<audio path>文件夹下生成`.csv`
 
+仅供娱乐:)
+
 <div align="center">
 
 # SingMOS
