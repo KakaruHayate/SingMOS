@@ -1,9 +1,16 @@
-添加了一个脚本用于本地使用
-请前往
+## 说明
+
+本fork添加了一个脚本用于本地使用
+
+请前往:
+
 https://dl.fbaipublicfiles.com/fairseq/wav2vec/wav2vec_small.pt
+
 https://github.com/South-Twilight/SingMOS/releases/download/checkpoint/ft_wav2vec2_small_15steps.pt
+
 下载权重，放置到`checkpoints`文件夹
-使用`python score.py --path <audio path>`命令使用该工具，会在<audio path>文件夹下生成`.csv`
+
+通过`python score.py --path <audio path>`命令使用该工具，会在<audio path>文件夹下生成`.csv`
 
 <div align="center">
 
