@@ -21,7 +21,7 @@ def predict_mos_for_folder(folder_path, use_cuda=False):
     predictor = load_mos_model(use_cuda)
     
     results = []
-    supported_formats = ('.wav', '.mp3', '.flac', '.ogg', '.m4a', '.flac', '.aac')
+    supported_formats = ('.wav', '.mp3', '.flac', '.ogg', '.m4a', '.aac')
     files = [f for f in os.listdir(folder_path) if f.endswith(supported_formats)]
     total_files = len(files)
     
