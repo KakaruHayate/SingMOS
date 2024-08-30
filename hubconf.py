@@ -9,7 +9,7 @@ from singmos.ssl_mos.ssl_mos import MOS_Predictor, load_ssl_model_s3prl # pylint
 
 
 URLS = {
-    "singing_ssl_mos": "https://github.com/South-Twilight/SingMOS/releases/download/v0.2.0/ft_wav2vec2_base_960_23steps.pt"
+    "singing_ssl_mos": "https://github.com/South-Twilight/SingMOS/releases/download/ckpt_s3prl/ft_wav2vec2_base_960_23steps.pt"
 }
 # [Origin]
 # "singing_ssl_mos" is derived from official nii-yamagishilab/mos-finetune-ssl, under BSD 3-Clause License (Copyright (c) 2021, Yamagishi Laboratory, National Institute of Informatics, https://github.com/nii-yamagishilab/mos-finetune-ssl/blob/main/LICENSE
@@ -46,7 +46,8 @@ def singing_ssl_mos(pretrained: bool = True, **kwargs) -> MOS_Predictor:
             ssl_model_type=model_type,
         )
         model.eval()
-        model.load_state_dict(torch.load(ft_model_path))
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        model.load_state_dict(torch.load(ft_model_path, map_location=device))
         return model
     else:
         raise ValueError("Please specify pretrained=True and provide a valid model_path.")
