@@ -3,14 +3,15 @@ import torch
 import librosa
 import pandas as pd
 import argparse
-from singmos.ssl_mos.ssl_mos import Singing_SSL_MOS
+from singmos.ssl_mos.ssl_mos import MOS_Predictor, load_ssl_model_s3prl
 
 def load_mos_model(use_cuda):
-    base_model_path = "checkpoints/wav2vec_small.pt"
-    ft_model_path = "checkpoints/ft_wav2vec2_small_15steps.pt"
-    model = Singing_SSL_MOS(
-        model_path=base_model_path,
-    )
+    model_type = "wav2vec2_base_960"
+    ft_model_path = "checkpoints/ft_wav2vec2_base_960_23steps.pt"
+    ssl_model, ssl_dim = load_ssl_model_s3prl(model_type)
+    model = MOS_Predictor(
+            ssl_model_type=model_type,
+        )
     if use_cuda:
         model = model.cuda()
     model.eval()
@@ -34,11 +35,12 @@ def predict_mos_for_folder(folder_path, use_cuda=False):
         if sr != 16000:
             wave = librosa.resample(wave, orig_sr=sr, target_sr=16000)
         
-        wave_tensor = torch.from_numpy(wave).unsqueeze(0)
+        wave_tensor = torch.from_numpy(wave) # .unsqueeze(0)
+        length = torch.tensor([wave_tensor.shape[1]])
         if use_cuda:
             wave_tensor = wave_tensor.cuda()
         
-        score = predictor(wave_tensor).item()
+        score = predictor(wave_tensor, length).item()
         results.append([filename, score])
         print(f"Score for {filename}: {score}")
 
@@ -50,7 +52,7 @@ def predict_mos_for_folder(folder_path, use_cuda=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Predict MOS scores for audio files in a folder.')
-    parser.add_argument('--path', type=str, required=True, help='Path to the folder containing .wav files')
+    parser.add_argument('--path', type=str, required=True, help='Path to the folder containing .audio files')
     
     args = parser.parse_args()
     folder_path = args.path
