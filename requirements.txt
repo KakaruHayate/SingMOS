@@ -3,3 +3,4 @@ pandas
 fairseq
 urllib
 librosa
+s3prl
