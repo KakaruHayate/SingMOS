@@ -35,7 +35,7 @@ def predict_mos_for_folder(folder_path, use_cuda=False):
         if sr != 16000:
             wave = librosa.resample(wave, orig_sr=sr, target_sr=16000)
         
-        wave_tensor = torch.from_numpy(wave) # .unsqueeze(0)
+        wave_tensor = torch.from_numpy(wave).unsqueeze(0)
         length = torch.tensor([wave_tensor.shape[1]])
         if use_cuda:
             wave_tensor = wave_tensor.cuda()
