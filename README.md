@@ -4,7 +4,7 @@
 
 请前往:
 
-https://github.com/South-Twilight/SingMOS/releases/download/v0.2.0/ft_wav2vec2_base_960_23steps.pt
+https://github.com/South-Twilight/SingMOS/releases
 
 下载权重，放置到`checkpoints`文件夹
 
